@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import pickle
 
 # -------------------------- 1. 输入论文实测数据（来源：附录Table S7 + Table S4） --------------------------
-# 数据说明：4组污染等级的OH日间生产速率（P_OH）和硫氧化率（SOR）均为论文直接给出的日均实测值
+# 数据说明：3组污染等级的OH日间生产速率（P_OH）和硫氧化率（SOR）均为论文直接给出的日均实测值
 data = {
-    '污染等级': ['非污染（NP）', '轻度污染（SP）', '中度污染（MP）', '重度污染（HP）'],
-    'OH日间生产速率_P_OH（ppbV/h）': [0.96, 0.40, 0.53, 1.09],  # 自变量：Table S7中Total生产速率均值
-    '硫氧化率_SOR（%）': [0.41, 0.79, 0.84, 0.80]  # 因变量：Table S4中SOR均值
+    '污染等级': ['轻度污染（SP）', '中度污染（MP）', '重度污染（HP）'],
+    'OH日间生产速率_P_OH（ppbV/h）': [0.40, 0.53, 1.09],  # 自变量：Table S7中Total生产速率均值
+    '硫氧化率_SOR（%）': [0.71, 0.79, 0.84]  # 因变量：Table S4中SOR均值
 }
 df = pd.DataFrame(data)
 
@@ -97,18 +97,18 @@ plt.show()
 
 # -------------------------- 5. 模型应用（预测新场景） --------------------------
 print("\n【模型应用：预测新场景的SOR】")
-print("场景1：假设OH日间生产速率 = 0.7 ppbV/h（中等活性场景）")
-P_OH_test1 = np.array([[0.7]])
+print("场景1：假设OH日间生产速率 = 0.6 ppbV/h（轻度污染与中度污染之间）")
+P_OH_test1 = np.array([[0.6]])
 SOR_pred1 = model.predict(P_OH_test1)[0]
 print(f"预测SOR = {SOR_pred1:.4f}%")
 
-print("\n场景2：假设OH日间生产速率 = 1.2 ppbV/h（高活性场景，接近HP期）")
-P_OH_test2 = np.array([[1.2]])
+print("\n场景2：假设OH日间生产速率 = 0.8 ppbV/h（中度污染与重度污染之间）")
+P_OH_test2 = np.array([[0.8]])
 SOR_pred2 = model.predict(P_OH_test2)[0]
 print(f"预测SOR = {SOR_pred2:.4f}%")
 
-print("\n场景3：假设OH日间生产速率 = 0.3 ppbV/h（低活性场景，接近SP期）")
-P_OH_test3 = np.array([[0.3]])
+print("\n场景3：假设OH日间生产速率 = 1.3 ppbV/h（超高活性场景，超过现有数据范围）")
+P_OH_test3 = np.array([[1.3]])
 SOR_pred3 = model.predict(P_OH_test3)[0]
 print(f"预测SOR = {SOR_pred3:.4f}%")
 print("="*60)
@@ -144,6 +144,6 @@ def predict_sor_from_oh(oh_production_rate_ppbV_h):
 
 if __name__ == "__main__":
     # 测试预测函数
-    test_oh = 0.7  # ppbV/h
+    test_oh = 0.8  # ppbV/h
     predicted_sor = predict_sor_from_oh(test_oh)
     print(f"\n测试：•OH生产速率={test_oh} ppbV/h，预测SOR={predicted_sor:.2f}%")
