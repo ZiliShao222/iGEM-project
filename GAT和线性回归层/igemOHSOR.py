@@ -8,15 +8,15 @@ import pickle
 # -------------------------- 1. 输入论文实测数据（来源：附录Table S7 + Table S4） --------------------------
 # 数据说明：3组污染等级的OH日间生产速率（P_OH）和硫氧化率（SOR）均为论文直接给出的日均实测值
 data = {
-    '污染等级': ['轻度污染（SP）', '中度污染（MP）', '重度污染（HP）'],
-    'OH日间生产速率_P_OH（ppbV/h）': [0.40, 0.53, 1.09],  # 自变量：Table S7中Total生产速率均值
-    '硫氧化率_SOR（%）': [0.71, 0.79, 0.84]  # 因变量：Table S4中SOR均值
+    'Pollution Level': ['SP', 'MP', 'HP'],
+    'OH Production Rate (ppbV/h)': [0.40, 0.53, 1.09],  # 自变量：Table S7中Total生产速率均值
+    'Sulfur Oxidation Rate (SOR, %)': [0.71, 0.79, 0.84]  # 因变量：Table S4中SOR均值
 }
 df = pd.DataFrame(data)
 
 # 提取自变量（X）和因变量（y）
-X = df['OH日间生产速率_P_OH（ppbV/h）'].values.reshape(-1, 1)  # 自变量需为二维数组（n_samples, n_features）
-y = df['硫氧化率_SOR（%）'].values  # 因变量为一维数组
+X = df['OH Production Rate (ppbV/h)'].values.reshape(-1, 1)  # 自变量需为二维数组（n_samples, n_features）
+y = df['Sulfur Oxidation Rate (SOR, %)'].values  # 因变量为一维数组
 
 # -------------------------- 2. 模型拟合（线性回归） --------------------------
 # 初始化线性回归模型
@@ -30,10 +30,10 @@ slope = model.coef_[0]        # 斜率（b）
 
 # 输出模型公式（贴合论文物理意义）
 print("="*60)
-print("模型1：OH日间生产速率 → 硫氧化率（SOR）线性回归模型")
-print(f"模型公式：SOR（%） = {intercept:.2f} + {slope:.2f} × P_OH（ppbV/h）")
-print(f"截距 a = {intercept:.4f}")
-print(f"斜率 b = {slope:.4f}")
+print("Model 1: OH Production Rate -> Sulfur Oxidation Rate (SOR)")
+print(f"Formula: SOR (%) = {intercept:.2f} + {slope:.2f} × P_OH (ppbV/h)")
+print(f"Intercept a = {intercept:.4f}")
+print(f"Slope b = {slope:.4f}")
 print("="*60)
 
 # -------------------------- 3. 模型验证（基于论文数据） --------------------------
@@ -45,29 +45,27 @@ r2 = r2_score(y, y_pred)                # 决定系数（越接近1，拟合越�
 mae = mean_absolute_error(y, y_pred)     # 平均绝对误差（越小，误差越小）
 
 # 输出验证结果
-print("\n【模型验证结果】（基于论文实测数据）")
-print(f"决定系数 R² = {r2:.4f}（R²>0.7，拟合效果良好）")
-print(f"平均绝对误差 MAE = {mae:.4f}（误差极小，贴合实测）")
+print("\n[Model Validation] (Based on observed data)")
+print(f"R² = {r2:.4f} (R²>0.7, good fit)")
+print(f"MAE = {mae:.4f} (small error, accurate prediction)")
 
 # 输出实测值与预测值对比表
-df['SOR预测值（%）'] = y_pred.round(4)
-df['绝对误差（%）'] = np.abs(df['硫氧化率_SOR（%）'] - df['SOR预测值（%）']).round(4)
-print("\n【论文实测值与模型预测值对比】")
-print(df[['污染等级', 'OH日间生产速率_P_OH（ppbV/h）', '硫氧化率_SOR（%）', 'SOR预测值（%）', '绝对误差（%）']])
+df['SOR Pred (%)'] = y_pred.round(4)
+df['Abs Error (%)'] = np.abs(df['Sulfur Oxidation Rate (SOR, %)'] - df['SOR Pred (%)']).round(4)
+print("\n[Observed vs Predicted Values]")
+print(df[['Pollution Level', 'OH Production Rate (ppbV/h)', 'Sulfur Oxidation Rate (SOR, %)', 'SOR Pred (%)', 'Abs Error (%)']])
 print("="*60)
 
 # -------------------------- 4. 模型可视化（贴合学术图表风格） --------------------------
-plt.rcParams['font.sans-serif'] = ['SimHei']  # 支持中文显示
-plt.rcParams['axes.unicode_minus'] = False    # 支持负号显示
 plt.figure(figsize=(10, 6))
 
 # 绘制散点图（论文实测数据）
-plt.scatter(X, y, color='#2E86AB', s=150, alpha=0.8, edgecolors='#1A5276', linewidth=2, label='论文实测数据')
+plt.scatter(X, y, color='#2E86AB', s=150, alpha=0.8, edgecolors='#1A5276', linewidth=2, label='Observed Data')
 
 # 绘制拟合直线（覆盖自变量取值范围）
 X_range = np.linspace(X.min() - 0.1, X.max() + 0.1, 100).reshape(-1, 1)  # 扩展x轴范围，使直线更完整
 y_range_pred = model.predict(X_range)
-plt.plot(X_range, y_range_pred, color='#E63946', linewidth=3, alpha=0.9, label=f'拟合直线（R_square={r2:.4f}）')
+plt.plot(X_range, y_range_pred, color='#E63946', linewidth=3, alpha=0.9, label=f'Fitted Line (R²={r2:.4f})')
 
 # 标注每个数据点的污染等级
 for i in range(len(df)):
@@ -82,9 +80,9 @@ for i in range(len(df)):
     )
 
 # 设置图表标签和标题（贴合学术规范）
-plt.xlabel('OH日间生产速率 P_OH（ppbV/h）', fontsize=12, fontweight='bold')
-plt.ylabel('硫氧化率 SOR（%）', fontsize=12, fontweight='bold')
-plt.title('OH日间生产速率与硫氧化率（SOR）的线性关系', fontsize=14, fontweight='bold', pad=20)
+plt.xlabel('OH Production Rate (ppbV/h)', fontsize=12, fontweight='bold')
+plt.ylabel('Sulfur Oxidation Rate (SOR, %)', fontsize=12, fontweight='bold')
+plt.title('Relationship between OH Production Rate and SOR', fontsize=14, fontweight='bold', pad=20)
 plt.legend(loc='upper left', fontsize=11)
 plt.grid(True, alpha=0.3, linestyle='--')
 
@@ -96,54 +94,54 @@ plt.tight_layout()
 plt.show()
 
 # -------------------------- 5. 模型应用（预测新场景） --------------------------
-print("\n【模型应用：预测新场景的SOR】")
-print("场景1：假设OH日间生产速率 = 0.6 ppbV/h（轻度污染与中度污染之间）")
+print("\n[Model Application: Predicting SOR for New Scenarios]")
+print("Scenario 1: OH Production Rate = 0.6 ppbV/h (between SP and MP)")
 P_OH_test1 = np.array([[0.6]])
 SOR_pred1 = model.predict(P_OH_test1)[0]
-print(f"预测SOR = {SOR_pred1:.4f}%")
+print(f"Predicted SOR = {SOR_pred1:.4f}%")
 
-print("\n场景2：假设OH日间生产速率 = 0.8 ppbV/h（中度污染与重度污染之间）")
+print("\nScenario 2: OH Production Rate = 0.8 ppbV/h (between MP and HP)")
 P_OH_test2 = np.array([[0.8]])
 SOR_pred2 = model.predict(P_OH_test2)[0]
-print(f"预测SOR = {SOR_pred2:.4f}%")
+print(f"Predicted SOR = {SOR_pred2:.4f}%")
 
-print("\n场景3：假设OH日间生产速率 = 1.3 ppbV/h（超高活性场景，超过现有数据范围）")
+print("\nScenario 3: OH Production Rate = 1.3 ppbV/h (high activity, beyond data range)")
 P_OH_test3 = np.array([[1.3]])
 SOR_pred3 = model.predict(P_OH_test3)[0]
-print(f"预测SOR = {SOR_pred3:.4f}%")
+print(f"Predicted SOR = {SOR_pred3:.4f}%")
 print("="*60)
 
 # ====================== 保存模型 ======================
 with open('oh_sor_model.pkl', 'wb') as f:
     pickle.dump(model, f)
-print("模型已保存为 oh_sor_model.pkl")
+print("Model saved as oh_sor_model.pkl")
 
 # ====================== 预测函数 ======================
 def predict_sor_from_oh(oh_production_rate_ppbV_h):
     """
-    根据•OH日间生产速率预测硫氧化率（SOR）
+    Predict Sulfur Oxidation Rate (SOR) from OH production rate
 
-    参数:
-        oh_production_rate_ppbV_h: •OH日间生产速率 (ppbV/h)
+    Args:
+        oh_production_rate_ppbV_h: OH production rate (ppbV/h)
 
-    返回:
-        硫氧化率 SOR (%)
+    Returns:
+        Sulfur Oxidation Rate SOR (%)
     """
     try:
         with open('oh_sor_model.pkl', 'rb') as f:
             model = pickle.load(f)
     except FileNotFoundError:
-        print("警告：未找到 oh_sor_model.pkl，请先运行 igemOHSOR.py 训练模型")
+        print("Warning: oh_sor_model.pkl not found, please run igemOHSOR.py to train the model")
         return None
 
     sor = model.predict([[oh_production_rate_ppbV_h]])[0]
-    # 确保SOR在合理范围内
+    # Ensure SOR is within reasonable range
     sor = max(0, min(100, sor))
     return sor
 
 
 if __name__ == "__main__":
-    # 测试预测函数
+    # Test prediction function
     test_oh = 0.8  # ppbV/h
     predicted_sor = predict_sor_from_oh(test_oh)
-    print(f"\n测试：•OH生产速率={test_oh} ppbV/h，预测SOR={predicted_sor:.2f}%")
+    print(f"\nTest: OH Production Rate={test_oh} ppbV/h, Predicted SOR={predicted_sor:.2f}%")

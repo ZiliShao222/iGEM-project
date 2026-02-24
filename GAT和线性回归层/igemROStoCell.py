@@ -22,15 +22,15 @@ y_pred = model.predict(X)
 r2 = model.score(X, y)
 
 # Print results
-print(f"ROS-细胞活性回归模型:")
-print(f"斜率 (Slope): {model.coef_[0]:.4f}")
-print(f"截距 (Intercept): {model.intercept_:.4f}")
+print(f"ROS-Cell Viability Regression Model:")
+print(f"Slope: {model.coef_[0]:.4f}")
+print(f"Intercept: {model.intercept_:.4f}")
 print(f"R²: {r2:.4f}")
 
 # Save model
 with open('ros_cell_model.pkl', 'wb') as f:
     pickle.dump(model, f)
-print("模型已保存为 ros_cell_model.pkl")
+print("Model saved as ros_cell_model.pkl")
 
 # Visualization
 plt.figure(figsize=(8, 6))
@@ -42,37 +42,37 @@ plt.title('Linear Regression: ROS Concentration vs Cell Viability', fontsize=14)
 plt.legend(fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.savefig('ros_cell_regression.png', dpi=150)
+plt.savefig('ROStoCell.png', dpi=150)
 plt.show()
-print("Figure saved as ros_cell_regression.png")
+print("Figure saved as ROStoCell.png")
 
 
 # ====================== 预测函数 ======================
 def predict_cell_viability(ros_concentration_umol):
     """
-    根据ROS浓度（μmol/L）预测细胞活性（%）
+    Predict cell viability from ROS concentration
 
-    参数:
-        ros_concentration_umol: ROS浓度 (μmol/L)
+    Args:
+        ros_concentration_umol: ROS concentration (μmol/L)
 
-    返回:
-        细胞活性 (%)
+    Returns:
+        Cell viability (%)
     """
     try:
         with open('ros_cell_model.pkl', 'rb') as f:
             model = pickle.load(f)
     except FileNotFoundError:
-        print("警告：未找到 ros_cell_model.pkl，使用刚训练的模型")
+        print("Warning: ros_cell_model.pkl not found, using current model")
         model = model
 
     cell_viab = model.predict([[ros_concentration_umol]])[0]
-    # 确保细胞活性在合理范围内
+    # Ensure cell viability is within reasonable range
     cell_viab = max(0, min(100, cell_viab))
     return cell_viab
 
 
 if __name__ == "__main__":
-    # 测试预测函数
+    # Test prediction function
     test_ros = 25  # μmol/L
     predicted_viability = predict_cell_viability(test_ros)
-    print(f"\n测试：ROS={test_ros} μmol/L，预测细胞活性={predicted_viability:.2f}%")
+    print(f"\nTest: ROS={test_ros} μmol/L, Predicted cell viability={predicted_viability:.2f}%")
