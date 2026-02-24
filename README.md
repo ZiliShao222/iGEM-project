@@ -31,7 +31,7 @@ iGEM-project/
     ├── igemgraph.py           # GAT 模型训练
     ├── igemgraph_predict.py   # GAT 模型预测
     ├── igemOHsecpollution.py  # OH 二次污染分析
-    ├── igemOHSOR.py           # OH SOR 预测
+    ├── igemOHSOR.py           # OH SOR 关联分析
     ├── igemROStoCell.py       # ROS 细胞转化分析
     ├── best_gat_model.pth     # 训练好的 GAT 模型
     ├── best_gcn_model.pth     # 训练好的 GCN 模型
@@ -118,9 +118,9 @@ python igemgraph_predict.py
 
 项目包含以下可视化结果：
 
-- `OHSOR.png` - OH SOR 预测结果
+- `OHSOR.png` - OH SOR 结果分析
 - `ROStoCell.png` - ROS 细胞转化分析
-- `secpollution.png` - 二次污染预测
+- `secpollution.png` - 二次污染分析
 
 ## 🔧 使用已训练模型
 
