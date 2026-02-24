@@ -50,7 +50,7 @@ print("\nObserved vs Predicted Values:")
 print(df[['Season', 'OH Conc. (×10⁶ molecules/cm³)', 'Alkene Loss Rate (%)', 'Alkene Loss Pred (%)']])
 
 # -------------------------- 4. 模型可视化（适配单自变量） --------------------------
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(8, 8))
 
 # 子图1：·OH浓度 vs 烯烃损失率（标注季节）
 scatter = plt.scatter(df['OH Conc. (×10⁶ molecules/cm³)'], df['Alkene Loss Rate (%)'],

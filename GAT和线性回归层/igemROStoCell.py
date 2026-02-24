@@ -35,7 +35,7 @@ with open('ros_cell_model.pkl', 'wb') as f:
 print("Model saved as ros_cell_model.pkl")
 
 # Visualization
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(8, 8))
 plt.scatter(ros_conc, cell_activity, s=100, color='blue', label='Experimental data')
 plt.plot(ros_conc, y_pred, '--', linewidth=2, label=f'Regression line (R²={r2:.4f})')
 plt.xlabel('ROS concentration (μmol/L)', fontsize=12)

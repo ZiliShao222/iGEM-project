@@ -59,7 +59,7 @@ print(df[['Pollution Level', 'OH Production Rate (ppbV/h)', 'Sulfur Oxidation Ra
 print("="*60)
 
 # -------------------------- 4. 模型可视化（贴合学术图表风格） --------------------------
-plt.figure(figsize=(10, 6))
+plt.figure(figsize=(8, 8))
 
 # 绘制散点图（论文实测数据）
 plt.scatter(X, y, color='#2E86AB', s=150, alpha=0.8, edgecolors='#1A5276', linewidth=2, label='Observed Data')
