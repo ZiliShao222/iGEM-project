@@ -70,7 +70,7 @@ plt.plot(X_range, y_range_pred, color='#E63946', linewidth=3, alpha=0.9, label=f
 # 标注每个数据点的污染等级
 for i in range(len(df)):
     plt.annotate(
-        df['污染等级'].iloc[i],
+        df['Pollution Level'].iloc[i],
         xy=(X[i][0], y[i]),
         xytext=(5, 5),  # 文本偏移量
         textcoords='offset points',
