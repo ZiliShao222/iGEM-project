@@ -1,4 +1,6 @@
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')  # 使用非交互式后端
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import pickle
@@ -33,7 +35,7 @@ with open('ros_cell_model.pkl', 'wb') as f:
 print("Model saved as ros_cell_model.pkl")
 
 # Visualization
-plt.figure(figsize=(8, 6))
+plt.figure(figsize=(10, 6))
 plt.scatter(ros_conc, cell_activity, s=100, color='blue', label='Experimental data')
 plt.plot(ros_conc, y_pred, '--', linewidth=2, label=f'Regression line (R²={r2:.4f})')
 plt.xlabel('ROS concentration (μmol/L)', fontsize=12)
@@ -42,8 +44,8 @@ plt.title('Linear Regression: ROS Concentration vs Cell Viability', fontsize=14)
 plt.legend(fontsize=12)
 plt.grid(True, alpha=0.3)
 plt.tight_layout()
-plt.savefig('ROStoCell.png', dpi=150)
-plt.show()
+plt.savefig('ROStoCell.png', dpi=150, bbox_inches='tight')
+# plt.show()  # Non-interactive mode
 print("Figure saved as ROStoCell.png")
 
 

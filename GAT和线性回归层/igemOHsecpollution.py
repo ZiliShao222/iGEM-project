@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score
+import matplotlib
+matplotlib.use('Agg')  # 使用非交互式后端
 import matplotlib.pyplot as plt
 import pickle
 
@@ -48,7 +50,7 @@ print("\nObserved vs Predicted Values:")
 print(df[['Season', 'OH Conc. (×10⁶ molecules/cm³)', 'Alkene Loss Rate (%)', 'Alkene Loss Pred (%)']])
 
 # -------------------------- 4. 模型可视化（适配单自变量） --------------------------
-plt.figure(figsize=(12, 10))
+plt.figure(figsize=(10, 6))
 
 # 子图1：·OH浓度 vs 烯烃损失率（标注季节）
 scatter = plt.scatter(df['OH Conc. (×10⁶ molecules/cm³)'], df['Alkene Loss Rate (%)'],
@@ -70,7 +72,9 @@ plt.legend()
 plt.grid(alpha=0.3)
 
 plt.tight_layout()
-plt.show()
+plt.savefig('secpollution.png', dpi=150, bbox_inches='tight')
+# plt.show()  # Non-interactive mode
+print("Figure saved as secpollution.png")
 
 # -------------------------- 5. 模型应用（仅输入·OH浓度即可预测） --------------------------
 print("\n" + "="*50)

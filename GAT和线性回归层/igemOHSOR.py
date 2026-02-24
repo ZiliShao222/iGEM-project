@@ -2,6 +2,8 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import r2_score, mean_absolute_error
+import matplotlib
+matplotlib.use('Agg')  # 使用非交互式后端
 import matplotlib.pyplot as plt
 import pickle
 
@@ -91,7 +93,9 @@ plt.xlim(X.min() - 0.2, X.max() + 0.2)
 plt.ylim(y.min() - 0.05, y.max() + 0.05)
 
 plt.tight_layout()
-plt.show()
+plt.savefig('OHSOR.png', dpi=150, bbox_inches='tight')
+# plt.show()  # Non-interactive mode
+print("Figure saved as OHSOR.png")
 
 # -------------------------- 5. 模型应用（预测新场景） --------------------------
 print("\n[Model Application: Predicting SOR for New Scenarios]")
