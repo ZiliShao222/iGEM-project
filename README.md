@@ -169,6 +169,40 @@ model.eval()
 
 ## 📝 参考文献
 
+### 背景支撑论文
+
+1. **Incomplete solid fuel burning as the major emission source of atmospheric phenols and environmentally persistent free radicals**
+   - 结论：木质素不完全燃烧生成酚类前体物导致EPFRs产生
+
+2. **Molecular Products and Radicals from Pyrolysis of Lignin**
+   - 结论：居民固体燃料（生物质、煤）不完全燃烧是大气EPFRs（80.6%）和酚类（99.9%）的主要来源
+
+3. **Oxidants, oxidative stress and the biology of ageing**
+   - 结论：首次系统阐述ROS作为氧化剂，通过氧化损伤蛋白质、脂质膜和DNA引发细胞衰老，明确其与代谢疾病、衰老相关病理过程的关联
+
+4. **Oxidative stress**
+   - 结论：全面解析氧化应激的生物学机制，指出过量ROS会打破机体抗氧化平衡，诱发慢性炎症、细胞凋亡
+
+5. **Aerosol health effects from molecular to global scales**
+   - 结论：聚焦大气气溶胶健康效应，明确ROS是PM₂.₅引发呼吸系统损伤、心血管疾病的关键中间物质
+
+6. **Chemical exposure-response relationship between air pollutants and reactive oxygen species in the human respiratory tract**
+   - 结论：开发KM-SUB-ELF模型，模拟显示肺部ROS浓度与呼吸道疾病、心血管疾病直接相关
+
+7. **Environmentally Persistent Free Radicals, Reactive Oxygen Species Generation, and Oxidative Potential of Highway PM2.5**
+   - 结论：EPFRs可能与柴油尾气颗粒相关，并通过与Fe、Cu等过渡金属相互作用得以稳定
+
+8. **Hydroxyl radical generations form the physiologically relevant Fenton-like reactions**
+   - 结论：·OH毒性机制
+
+9. **Hydroxyl radical is a significant player in oxidative DNA damage in vivo**
+   - 结论：·OH与DNA损伤
+
+10. **Effects of the Cytoplasm and Mitochondrial Specific Hydroxyl Radical Scavengers... in Bleomycin-Induced Pulmonary Fibrosis Model Mice**
+    - 结论：·OH与肺部疾病
+
+### 技术参考
+
 - Graph Attention Networks (GAT): Velickovic et al., 2018
 - iGEM Official Website: https://igem.org
 
