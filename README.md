@@ -42,7 +42,6 @@ iGEM-project/
     ├── igemOHSOR.py           # OH SOR 关联分析
     ├── igemROStoCell.py       # ROS 细胞转化分析
     ├── best_gat_model.pth     # 训练好的 GAT 模型
-    ├── best_gcn_model.pth     # 训练好的 GCN 模型
     ├── *.pkl                  # 各任务的训练模型
     └── *.png                  # 结果可视化图表
 ```
